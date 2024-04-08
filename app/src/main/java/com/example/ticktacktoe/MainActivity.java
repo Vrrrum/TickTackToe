@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         ImageView square = findViewById(view.getId());
         int squareValue = Integer.parseInt(square.getTag().toString());
 
-        board[squareValue] = activePlayer;
+        if(board[squareValue] != 0) return;
 
+        board[squareValue] = activePlayer;
         if(activePlayer == 1) {
             activePlayer = 2;
             square.setImageResource(R.drawable.x);
