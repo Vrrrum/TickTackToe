@@ -1,7 +1,6 @@
 package com.example.ticktacktoe;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,5 +33,24 @@ public class MainActivity extends AppCompatActivity {
             square.setImageResource(R.drawable.o);
             turn_tv.setText("X turn");
         }
+
+        if (CheckWin(board)) {
+            turn_tv.setText(activePlayer == 1 ? "O wins!" : "X wins!");
+        }
+    }
+
+    public boolean CheckWin(short[] board){
+        short[][] winList = {
+                {0,1,2}, {3,4,5}, {6,7,8},
+                {0,3,6}, {1,4,7}, {2,5,8},
+                {0,4,8}, {2,4,6}
+        };
+
+        for (short[] winCondition : winList) {
+            if (board[winCondition[0]] != 0 && board[winCondition[0]] == board[winCondition[1]] && board[winCondition[0]] == board[winCondition[2]]) {
+                return true;
+            }
+        }
+        return false;
     }
 }
