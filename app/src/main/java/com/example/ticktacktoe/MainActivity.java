@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    short activePlayer = 1; // 1 = X, 2 = O
+    short activePlayer = 1; // 1 = X, 2 = O, 0 = endGame
     short[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0 = empty, 1 = X, 2 = O
 
     @Override
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView square = findViewById(view.getId());
         int squareValue = Integer.parseInt(square.getTag().toString());
 
-        if(board[squareValue] != 0) return;
+        if(board[squareValue] != 0 || activePlayer == 0) return;
 
         board[squareValue] = activePlayer;
         if(activePlayer == 1) {
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (CheckWin(board)) {
             turn_tv.setText(activePlayer == 1 ? "O wins!" : "X wins!");
+            activePlayer = 0;
         }
     }
 
