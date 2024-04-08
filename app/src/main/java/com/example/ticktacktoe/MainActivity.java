@@ -3,21 +3,34 @@ package com.example.ticktacktoe;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
-    short activePlayer = 1; // 1 = X, 2 = O, 0 = endGame
-    short[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0 = empty, 1 = X, 2 = O
+    int activePlayer = 1; // 1 = X, 2 = O, 0 = end of game
+    int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0 = empty, 1 = X, 2 = O
+    TextView turn_tv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        turn_tv = findViewById(R.id.turn_tv);
+        Button restart_btn = findViewById(R.id.restart_btn);
+        restart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartGame();
+            }
+        });
     }
 
     public void onSquareClick(View view) {
-        TextView turn_tv = findViewById(R.id.turn_tv);
         ImageView square = findViewById(view.getId());
         int squareValue = Integer.parseInt(square.getTag().toString());
 
@@ -40,18 +53,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean CheckWin(short[] board){
-        short[][] winList = {
+    public boolean CheckWin(int[] board){
+        int[][] winList = {
                 {0,1,2}, {3,4,5}, {6,7,8},
                 {0,3,6}, {1,4,7}, {2,5,8},
                 {0,4,8}, {2,4,6}
         };
 
-        for (short[] winCondition : winList) {
+        for (int[] winCondition : winList) {
             if (board[winCondition[0]] != 0 && board[winCondition[0]] == board[winCondition[1]] && board[winCondition[0]] == board[winCondition[2]]) {
                 return true;
             }
         }
         return false;
+    }
+
+    public void restartGame() {
+        Arrays.fill(board, 0);
+
+        ((ImageView) findViewById(R.id.sqr1)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr2)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr3)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr4)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr5)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr6)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr7)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr8)).setImageResource(0);
+        ((ImageView) findViewById(R.id.sqr9)).setImageResource(0);
+
+        activePlayer = 1;
+        turn_tv.setText("X turn");
     }
 }
