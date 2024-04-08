@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0 = empty, 1 = X, 2 = O
     TextView turn_tv = null;
 
+    int MovesCount = 9;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +42,26 @@ public class MainActivity extends AppCompatActivity {
         if(activePlayer == 1) {
             activePlayer = 2;
             square.setImageResource(R.drawable.x);
-            turn_tv.setText("O turn");
+            if(CheckDraw()){
+                turn_tv.setText(R.string.draw);
+            }else {
+                turn_tv.setText(R.string.o_round);
+            }
         } else {
             activePlayer = 1;
             square.setImageResource(R.drawable.o);
-            turn_tv.setText("X turn");
+            if(CheckDraw()){
+                turn_tv.setText(R.string.draw);
+            }else {
+                turn_tv.setText(R.string.x_round);
+            }
         }
 
         if (CheckWin(board)) {
             turn_tv.setText(activePlayer == 1 ? "O wins!" : "X wins!");
             activePlayer = 0;
         }
+
     }
 
     public boolean CheckWin(int[] board){
@@ -68,6 +79,17 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    public boolean CheckDraw(){
+        MovesCount--;
+
+        if(MovesCount == 0){
+            activePlayer = 0;
+            return true;
+        }
+
+        return false;
+    };
+
     public void restartGame() {
         Arrays.fill(board, 0);
 
@@ -82,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         ((ImageView) findViewById(R.id.sqr9)).setImageResource(0);
 
         activePlayer = 1;
-        turn_tv.setText("X turn");
+        turn_tv.setText(R.string.x_round);
+        MovesCount = 9;
     }
+
 }
