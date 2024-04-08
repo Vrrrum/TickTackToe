@@ -119,7 +119,7 @@
             android:layout_column="2"
             android:background="@color/white"
             android:onClick="onSquareClick"
-            android:tag="0" />
+            android:tag="8" />
 
     </GridLayout>
 
