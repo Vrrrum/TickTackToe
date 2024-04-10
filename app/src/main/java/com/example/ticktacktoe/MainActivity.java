@@ -28,12 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Board instance
         _boardInstance = BoardSingleton.getInstance(findViewById(R.id.board_gl));
 
         _turn_tv = findViewById(R.id.turn_tv);
 
-        // Popup
         _inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = _inflater.inflate(R.layout.end_popup, null);
     }
@@ -44,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(_boardInstance.setSquare(squareValue, _gameStateId)) {
             _gameStateId = (_gameStateId == 1)? 2:1;
+
+            if(_gameStateId == 1) {
+                _turn_tv.setText(R.string.x_round);
+            }else{
+                _turn_tv.setText(R.string.o_round);
+            }
+
             _boardInstance.Update();
         }
 
@@ -99,15 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void ShowPopup(String popupText) {
 
-        // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.end_popup, null);
 
-
         int width = 850;
         int height = 1000;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
+        boolean focusable = true;
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         TextView tv1 = popupView.findViewById(R.id.textPopup_tv);
