@@ -4,138 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/accent">
-
-
-    <GridLayout
-        android:id="@+id/board_gl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="244dp"
-        android:background="@color/primary"
-        android:columnCount="3"
-        android:rowCount="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/sqr1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="0" />
-
-        <ImageView
-            android:id="@+id/sqr2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="1" />
-
-        <ImageView
-            android:id="@+id/sqr3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_marginBottom="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="2" />
-
-        <ImageView
-            android:id="@+id/sqr4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="3" />
-
-        <ImageView
-            android:id="@+id/sqr5"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="4" />
-
-        <ImageView
-            android:id="@+id/sqr6"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:layout_marginBottom="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="5" />
-
-        <ImageView
-            android:id="@+id/sqr7"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:layout_marginEnd="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="6" />
-
-        <ImageView
-            android:id="@+id/sqr8"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:layout_marginEnd="5dp"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="7" />
-
-        <ImageView
-            android:id="@+id/sqr9"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_row="2"
-            android:layout_column="2"
-            android:background="@color/accent"
-            android:onClick="onSquareClick"
-            android:tag="8" />
-
-    </GridLayout>
+    tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/turn_tv"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="X turn"
-        android:textSize="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/board_gl"
+        android:layout_marginTop="24dp"
+        android:text="TicTacToe"
+        android:textColor="#CCA1DC"
+        android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.389" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFunFact"
+        android:layout_width="340dp"
+        android:layout_height="184dp"
+        android:layout_marginTop="244dp"
+        android:gravity="center_horizontal"
+        android:text="TicTacToe"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:text="Start"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="64dp"
+        android:maxWidth="200dp"
+        android:rotation="-15"
+        android:text="sth"
+        android:textColor="#9C27B0"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
