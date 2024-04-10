@@ -70,9 +70,7 @@ class CallApi extends AsyncTask<String, Void, String> {
             }
 
         } catch (Exception e) {
-            Log.e("error", e.getMessage(), e);
-            result = e.toString();
-            return result;
+            return "Error in API key";
         }
     }
 
