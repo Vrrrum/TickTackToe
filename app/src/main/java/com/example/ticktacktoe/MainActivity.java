@@ -1,121 +1,100 @@
 package com.example.ticktacktoe;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    int activePlayer = 1; // 1 = X, 2 = O, 0 = end of game
-    int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0 = empty, 1 = X, 2 = O
-    TextView turn_tv = null;
-    int MovesCount = 9;
-    GridLayout gridLayout;
-    LayoutInflater inflater;
+    private int _gameStateId = 1; // 1 = X, 2 = O, 0 = end of game
+    private BoardSingleton _boardInstance;
+    private TextView _turn_tv;
+    private int _movesCount = 0;
+    private LayoutInflater _inflater;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        turn_tv = findViewById(R.id.turn_tv);
+        // Board instance
+        _boardInstance = BoardSingleton.getInstance(findViewById(R.id.board_gl));
+
+        _turn_tv = findViewById(R.id.turn_tv);
 
         // Popup
-        inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.end_popup, null);
+        _inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = _inflater.inflate(R.layout.end_popup, null);
     }
 
-    public void onSquareClick(View view) {
+    public void onSquareClick(@NonNull View view) {
         ImageView square = findViewById(view.getId());
         int squareValue = Integer.parseInt(square.getTag().toString());
 
-        if(board[squareValue] != 0 || activePlayer == 0) return;
-
-        board[squareValue] = activePlayer;
-        if(activePlayer == 1) {
-            activePlayer = 2;
-            square.setImageResource(R.drawable.x);
-            if(CheckDraw()){
-                turn_tv.setText(R.string.draw);
-                ShowPopup("Draw!");
-            }else {
-                turn_tv.setText(R.string.o_round);
-            }
-        } else {
-            activePlayer = 1;
-            square.setImageResource(R.drawable.o);
-            if(CheckDraw()){
-                turn_tv.setText(R.string.draw);
-                ShowPopup("Draw!");
-            }else {
-                turn_tv.setText(R.string.x_round);
-            }
+        if(_boardInstance.setSquare(squareValue, _gameStateId)) {
+            _gameStateId = (_gameStateId == 1)? 2:1;
+            _boardInstance.Update();
         }
 
-        if (CheckWin(board)) {
-            turn_tv.setText(activePlayer == 1 ? "O wins!" : "X wins!");
-            ShowPopup(activePlayer == 1 ? "O wins!" : "X wins!");
-            activePlayer = 0;
+        if(CheckDraw()) {
+            ShowPopup("Draw!");
+            return;
         }
 
+        if(CheckWin()) {
+            ShowPopup(_gameStateId == 1 ? "O wins!" : "X wins!");
+            return;
+        }
+
+        _movesCount++;
     }
 
-    public boolean CheckWin(int[] board){
-        int[][] winList = {
-                {0,1,2}, {3,4,5}, {6,7,8},
-                {0,3,6}, {1,4,7}, {2,5,8},
-                {0,4,8}, {2,4,6}
-        };
+    public boolean CheckWin() {
+        if (_movesCount > 3) {
+            int[][] winList = {
+                    {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
+                    {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
+                    {0, 4, 8}, {2, 4, 6}
+            };
 
-        for (int[] winCondition : winList) {
-            if (board[winCondition[0]] != 0 && board[winCondition[0]] == board[winCondition[1]] && board[winCondition[0]] == board[winCondition[2]]) {
-                return true;
+            for (int[] winCondition : winList) {
+                if (_boardInstance.getSquare(winCondition[0]) != 0 &&
+                        _boardInstance.getSquare(winCondition[0]) == _boardInstance.getSquare(winCondition[1]) &&
+                        _boardInstance.getSquare(winCondition[0]) == _boardInstance.getSquare(winCondition[2])) {
+                    return true;
+                }
             }
         }
+
         return false;
     }
 
     public boolean CheckDraw(){
-        MovesCount--;
-
-        if(MovesCount == 0){
-            activePlayer = 0;
+        if(_movesCount == 9){
+            _gameStateId = 0;
             return true;
         }
 
         return false;
-    };
+    }
 
     public void RestartGame() {
-        Arrays.fill(board, 0);
-
-        ((ImageView) findViewById(R.id.sqr1)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr2)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr3)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr4)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr5)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr6)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr7)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr8)).setImageResource(0);
-        ((ImageView) findViewById(R.id.sqr9)).setImageResource(0);
-
-        activePlayer = 1;
-        turn_tv.setText(R.string.x_round);
-        MovesCount = 9;
+        _gameStateId = 1;
+        _turn_tv.setText(R.string.x_round);
+        _movesCount = 0;
+        _boardInstance.Reset();
+        _boardInstance.Update();
     }
 
     public void ShowPopup(String popupText) {
