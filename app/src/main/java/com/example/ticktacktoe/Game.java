@@ -22,8 +22,6 @@ public class Game extends AppCompatActivity {
     private int _movesCount = 0;
     private LayoutInflater _inflater;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +85,7 @@ public class Game extends AppCompatActivity {
     }
 
     public boolean CheckDraw(){
-        if(_movesCount == 9){
+        if(_movesCount == 8){
             _gameStateId = 0;
             return true;
         }

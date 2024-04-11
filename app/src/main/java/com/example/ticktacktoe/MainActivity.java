@@ -16,14 +16,14 @@ public class MainActivity extends AppCompatActivity implements CallApi.APICallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tvHint = findViewById(R.id.tvHint);
+        TextView tvHint = findViewById(R.id.hint_tv);
         Animation pulseAnimation = new ScaleAnimation(1f, 1.15f, 1f, 1.15f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         pulseAnimation.setDuration(700);
         pulseAnimation.setRepeatMode(Animation.REVERSE);
         pulseAnimation.setRepeatCount(Animation.INFINITE);
         tvHint.startAnimation(pulseAnimation);
 
-        Button button1 = findViewById(R.id.button1);
+        Button button1 = findViewById(R.id.startGameButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements CallApi.APICallba
         CallApi apiCallTaskForFunnyMessage = new CallApi(new CallApi.APICallback() {
             @Override
             public void onResult(String result) {
-                TextView tvHint = findViewById(R.id.tvHint);
+                TextView tvHint = findViewById(R.id.hint_tv);
                 tvHint.setText(result);
             }
         });
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements CallApi.APICallba
         CallApi apiCallTaskForTitle = new CallApi(new CallApi.APICallback() {
             @Override
             public void onResult(String result) {
-                TextView title = findViewById(R.id.tvFunFact);
+                TextView title = findViewById(R.id.funFact_tv);
                 title.setText(result);
             }
         });
