@@ -35,7 +35,7 @@ class CallApi extends AsyncTask<String, Void, String> {
 
             JSONObject message2 = new JSONObject();
             message2.put("role", "user");
-            message2.put("content", messages[0]); // Take the first message from the array
+            message2.put("content", messages[0]);
 
             JSONArray messagesArray = new JSONArray();
             messagesArray.put(message2);

@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.os.AsyncTask;
+
 
 public class MainActivity extends AppCompatActivity implements CallApi.APICallback {
 
@@ -15,6 +17,24 @@ public class MainActivity extends AppCompatActivity implements CallApi.APICallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CallApi apiCallTaskForFunnyMessage = new CallApi(new CallApi.APICallback() {
+            @Override
+            public void onResult(String result) {
+                TextView tvHint = findViewById(R.id.hint_tv);
+                tvHint.setText(result);
+            }
+        });
+        CallApi apiCallTaskForTitle = new CallApi(new CallApi.APICallback() {
+            @Override
+            public void onResult(String result) {
+                TextView title = findViewById(R.id.funFact_tv);
+                title.setText(result);
+            }
+        });
+
+        apiCallTaskForFunnyMessage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "Write message (max 10 words) like funny minecraft splash text about tic tac toe");
+        apiCallTaskForTitle.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "Write fun fact about tic tac toe be creative");
 
         TextView tvHint = findViewById(R.id.hint_tv);
         Animation pulseAnimation = new ScaleAnimation(1f, 1.15f, 1f, 1.15f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -31,24 +51,6 @@ public class MainActivity extends AppCompatActivity implements CallApi.APICallba
                 startActivity(intent);
             }
         });
-
-        CallApi apiCallTaskForFunnyMessage = new CallApi(new CallApi.APICallback() {
-            @Override
-            public void onResult(String result) {
-                TextView tvHint = findViewById(R.id.hint_tv);
-                tvHint.setText(result);
-            }
-        });
-        apiCallTaskForFunnyMessage.execute("Write (max 7 words) funny message");
-        CallApi apiCallTaskForTitle = new CallApi(new CallApi.APICallback() {
-            @Override
-            public void onResult(String result) {
-                TextView title = findViewById(R.id.funFact_tv);
-                title.setText(result);
-            }
-        });
-        apiCallTaskForTitle.execute("Write fun fact about tic tac toe be creative");
-
     }
 
     @Override

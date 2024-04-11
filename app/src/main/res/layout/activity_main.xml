@@ -11,18 +11,19 @@
 
     <TextView
         android:id="@+id/title_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="397dp"
+        android:layout_height="94dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="50dp"
         android:text="Tic-Tac-Toe"
         android:textAlignment="center"
         android:textColor="@color/green"
         android:textSize="58sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/funFact_tv"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.088" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startGameButton"
@@ -45,7 +46,7 @@
         android:layout_height="262dp"
         android:layout_marginBottom="52dp"
         android:gravity="center_horizontal"
-        android:text="TextView"
+        android:text="Loading"
         android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/startGameButton"
@@ -57,11 +58,16 @@
         android:id="@+id/hint_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="176dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+        android:rotation="-15"
+        android:text="vvvvv"
+        android:maxWidth="150dp"
+        android:textColor="#FFEB3B"
+        app:layout_constraintBottom_toBottomOf="@+id/title_tv"
+        app:layout_constraintEnd_toEndOf="@+id/title_tv"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/title_tv"
+        app:layout_constraintTop_toTopOf="@+id/title_tv"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

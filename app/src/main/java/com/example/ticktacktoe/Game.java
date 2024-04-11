@@ -20,7 +20,6 @@ public class Game extends AppCompatActivity {
     private BoardSingleton _boardInstance;
     private TextView _turn_tv;
     private int _movesCount = 0;
-    private LayoutInflater _inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +29,6 @@ public class Game extends AppCompatActivity {
         _boardInstance = BoardSingleton.getInstance(findViewById(R.id.board_gl));
 
         _turn_tv = findViewById(R.id.turn_tv);
-
-        _inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = _inflater.inflate(R.layout.end_popup, null);
     }
 
     public void onSquareClick(@NonNull View view) {
@@ -51,13 +47,13 @@ public class Game extends AppCompatActivity {
             _boardInstance.Update();
         }
 
-        if(CheckDraw()) {
-            ShowPopup("Draw!");
+        if(CheckWin()) {
+            ShowPopup(_gameStateId == 1 ? "O wins!" : "X wins!");
             return;
         }
 
-        if(CheckWin()) {
-            ShowPopup(_gameStateId == 1 ? "O wins!" : "X wins!");
+        if(CheckDraw()) {
+            ShowPopup("Draw!");
             return;
         }
 
